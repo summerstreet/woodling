@@ -1,0 +1,9 @@
+February 10, 2013 - v0.1.0
+
+* Possibility to create a blueprint with basic attributes
+* Possibility to set lazy attributes
+* Possibility to set sequences
+* Possibility to create a blueprint with a different class name
+* Possibility to retrieve an instance of your object from a blueprint
+* Possibility to retrieve a saved instance of your object from a blueprint
+* Possibility to override attributes when making instances
