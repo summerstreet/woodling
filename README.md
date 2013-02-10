@@ -9,7 +9,7 @@ You can install Woodling via [Composer](http://getcomposer.org/). Put this in yo
 ```
 "require-dev":
 {
-	"woodling/woodling": "0.1.*"
+	"summerstreet/woodling": "0.1.*"
 }
 ```
 
