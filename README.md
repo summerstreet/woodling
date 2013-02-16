@@ -41,6 +41,42 @@ Woodling::seed('Admin', array('class' => 'User', 'do' => function($blueprint)
 
 By the way, since Woodling utilizes _your_ code, you can take advantage of everything that your classes do under the hood. For example, if you were using Laravel's Eloquent, and it would have a `set_password()` method defined, this method would be called when setting your password.
 
+Woodling will automatigally load your blueprints defined in following locations:
+
+* application/tests/blueprints/*.php
+* application/tests/blueprints.php
+* app/tests/blueprints/*.php
+* app/tests/blueprints.php
+* tests/blueprints/*.php
+* tests/blueprints.php
+
+You can also add additional search paths. In your bootstrap file add the following lines:
+
+```
+use Woodling/Woodling;
+
+// Single path
+Woodling::getCore()->finder->addPaths('src/Acme/DemoBundle/Tests/blueprints');
+
+// Several paths
+Woodling::getCore()->finder->addPaths(array(
+	'/absolute/path/to/blueprints',
+	'relative/path/to/blueprints'
+));
+
+// Search in new paths
+Woodling::getCore()->finder->findBlueprints();
+```
+
+When adding paths, keep in mind, that the last segment of the path will be used as both file name and dir name:
+
+```
+// Looks for these destinations:
+// - tests/blueprints/*.php
+// - tests/blueprints.php
+Woodling::getCore()->finder->addPaths('tests/blueprints');
+```
+
 ### Retrieving blueprints
 
 To retrieve instances of your models, you can use the following methods:
