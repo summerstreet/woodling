@@ -71,7 +71,7 @@ Woodling::getCore()->finder->findBlueprints();
 When adding paths, keep in mind, that the last segment of the path will be used as both file name and dir name:
 
 ```
-// Looks for these destinations:
+// Looks in these destinations:
 // - tests/blueprints/*.php
 // - tests/blueprints.php
 Woodling::getCore()->finder->addPaths('tests/blueprints');
