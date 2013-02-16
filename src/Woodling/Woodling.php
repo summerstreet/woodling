@@ -18,8 +18,8 @@ class Woodling
     public static function init()
     {
         $core = new Core();
-        $core->finder->findBlueprints();
         static::setCore($core);
+        $core->finder->findBlueprints();
         return $core;
     }
 

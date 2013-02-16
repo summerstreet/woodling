@@ -13,7 +13,7 @@ class Finder
      * @var array Default search paths (last node serves as both file and folder name)
      */
     public $searchPaths = array(
-        'applications/tests/blueprints',
+        'application/tests/blueprints',
         'app/tests/blueprints',
         'tests/blueprints'
     );
@@ -53,8 +53,8 @@ class Finder
      *
      * By default, it will attempt to load the following files:
      *
-     * - applications/tests/blueprints/*.php
-     * - applications/tests/blueprints.php
+     * - application/tests/blueprints/*.php
+     * - application/tests/blueprints.php
      * - app/tests/blueprints/*.php
      * - app/tests/blueprints.php
      * - tests/blueprints/*.php
