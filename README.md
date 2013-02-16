@@ -41,7 +41,7 @@ Woodling::seed('Admin', array('class' => 'User', 'do' => function($blueprint)
 
 By the way, since Woodling utilizes _your_ code, you can take advantage of everything that your classes do under the hood. For example, if you were using Laravel's Eloquent, and it would have a `set_password()` method defined, this method would be called when setting your password.
 
-Woodling will automatigally load your blueprints defined in following locations:
+Woodling will automagically load your blueprints defined in following locations:
 
 * application/tests/blueprints/*.php
 * application/tests/blueprints.php
