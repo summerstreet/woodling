@@ -36,7 +36,8 @@ intermediate
 publish
 .idea
 
-# Composer
+# Woodling
 composer.phar
 composer.lock
 vendor
+docs
