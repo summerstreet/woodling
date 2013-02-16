@@ -8,6 +8,7 @@ class TestWoodlingWoodling extends PHPUnit_Framework_TestCase
 
     /**
      * Should set a new instance of Woodling\Core on Woodling\Woodling
+     * @todo Test that Finder is called
      */
     public function testStaticInit()
     {

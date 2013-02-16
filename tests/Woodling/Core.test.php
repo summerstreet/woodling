@@ -21,6 +21,7 @@ class TestWoodlingCore extends PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf('Woodling\Core', $this->core);
         $this->assertInstanceOf('Woodling\Repository', $this->core->getRepository());
+        $this->assertInstanceOf('Woodling\Finder', $this->core->finder);
     }
 
     public function testSetAndGetRepository()

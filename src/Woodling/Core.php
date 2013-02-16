@@ -8,9 +8,15 @@ class Core
      */
     protected $repository;
 
+    /**
+     * @var Finder
+     */
+    public $finder;
+
     public function __construct()
     {
         $this->setRepository(new Repository());
+        $this->finder = new Finder();
     }
 
     /**
