@@ -8,13 +8,20 @@ class TestWoodlingWoodling extends PHPUnit_Framework_TestCase
 
     /**
      * Should set a new instance of Woodling\Core on Woodling\Woodling
-     * @todo Test that Finder is called
      */
     public function testStaticInit()
     {
+        $file = 'tests/blueprints.php';
+        $class = 'WoodlingTestStaticInitHelper_'.md5(microtime());
+        $content = '<?php class '.$class.'{}';
+        @file_put_contents($file, $content);
+
         $woodling = Woodling::init();
         $this->assertInstanceOf('Woodling\Core', Woodling::getCore());
         $this->assertSame($woodling, Woodling::getCore());
+        $this->assertTrue(class_exists($class));
+
+        @unlink($file);
     }
 
     public function testClass()
