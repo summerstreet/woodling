@@ -39,7 +39,7 @@ Woodling::seed('Admin', array('class' => 'User', 'do' => function($blueprint)
 }));
 ```
 
-By the way, since Woodling utilizes _your_ code, you can take advantage of everything that your classes do under the hood. For example, if you were using Laravel's Eloquent, and it would have a `set_password()` method defined, this method would be called when setting your password.
+By the way, since Woodling utilises _your_ code, you can take advantage of everything that your classes do under the hood. For example, if you were using Laravel's Eloquent, and it would have a `set_password()` method defined, this method would be called when setting your password.
 
 Woodling will automagically load your blueprints defined in following locations:
 
@@ -124,6 +124,49 @@ Woodling::seed('User', function($blueprint)
 		return "user{$i}@hostname.com";
 	});
 });
+```
+
+### Fake associations
+
+It is possible to create model associations by returning them from lazy attributes. This how you'd retrieve an instance with one-to-one relationship from Woodling:
+
+```
+Woodling::seed('Weakness', function($weakness)
+{
+    $weakness->type = 'Fruit';
+    $weakness->name = 'Apple';
+});
+
+Woodling::seed('Person', function($person)
+{
+    $person->name = 'Eve';
+    $person->weakness = Woodling::retrieve('Weakness');
+});
+
+$eve = Woodling::retrieve('Person');
+```
+
+And this how you'd do the same for one-to-many:
+
+
+```
+Woodling::seed('Atom', function($atom)
+{
+    $atom->element = 'H';
+});
+
+Woodling::seed('Molecule', function($molecule)
+{
+    $molecule->name = 'Water';
+    $molecule->atoms = function()
+    {
+        $h2 = Woodling::retrieve('Atom', array('element' => 'H2'));
+        $o = Woodling::retrieve('Atom', array('element' => 'O'));
+        return array($h2, $o);
+    };
+});
+
+$H2O = Woodling::retrieve('Molecule');
 ```
 
 ### Retrieving blueprints with advanced overrides
