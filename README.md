@@ -165,7 +165,7 @@ Woodling::seed('User', function($blueprint)
 
 ### Free tip
 
-Don't forget to put `use Woodlig\Woodling;` at the top of your file. This will let you use short class syntax instead of having to prepend it with a namespace.
+Don't forget to put `use Woodling\Woodling;` at the top of your file. This will let you use short class syntax instead of having to prepend it with a namespace.
 
 ### License
 
