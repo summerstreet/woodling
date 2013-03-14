@@ -41,3 +41,4 @@ composer.phar
 composer.lock
 vendor
 docs
+report
