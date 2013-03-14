@@ -126,7 +126,7 @@ Woodling::seed('User', function($blueprint)
 });
 ```
 
-### Fake associations
+### Faux associations
 
 It is possible to create model associations by returning them from lazy attributes. This is how you'd retrieve an instance with one-to-one relationship from Woodling:
 
