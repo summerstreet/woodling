@@ -79,4 +79,15 @@ class Woodling
         return static::getCore()->retrieveList($className, $count, $attributeOverrides);
     }
 
+    /**
+     * @param string $className
+     * @param int $count
+     * @param array $attributeOverrides
+     * @return array
+     */
+    public static function savedList($className, $count, $attributeOverrides = array())
+    {
+        return static::getCore()->savedList($className, $count, $attributeOverrides);
+    }
+
 }

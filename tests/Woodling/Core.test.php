@@ -178,4 +178,41 @@ class TestWoodlingCore extends PHPUnit_Framework_TestCase
         $this->assertEquals($instance, $list[0]);
     }
 
+    public function testSavedList()
+    {
+        $name = 'stdClass';
+        $count = 3;
+        $returnValue = new $name();
+
+        $coreMock = $this->getMock('Woodling\Core', array('saved'));
+        $coreMock->expects($this->exactly($count))
+            ->method('saved')
+            ->with($this->equalTo($name), $this->equalTo(array()))
+            ->will($this->returnValue($returnValue));
+
+        $list = $coreMock->savedList($name, $count);
+
+        $this->assertCount($count, $list);
+        $this->assertEquals($returnValue, $list[0]);
+    }
+
+    public function testSavedListWithOverrides()
+    {
+        $name = 'stdClass';
+        $count = 3;
+        $overrides = array('name' => 'Mindaugas Bujanauskas');
+        $returnValue = new $name();
+
+        $coreMock = $this->getMock('Woodling\Core', array('saved'));
+        $coreMock->expects($this->exactly($count))
+            ->method('saved')
+            ->with($this->equalTo($name), $this->equalTo($overrides))
+            ->will($this->returnValue($returnValue));
+
+        $list = $coreMock->savedList($name, $count, $overrides);
+
+        $this->assertCount($count, $list);
+        $this->assertEquals($returnValue, $list[0]);
+    }
+
 }

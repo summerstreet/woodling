@@ -121,4 +121,24 @@ class Core
         return $list;
     }
 
+    /**
+     * Returns an array containing specified amount of persisted model instances
+     *
+     * @param string $className
+     * @param int $count
+     * @param array $attributeOverrides
+     * @return array
+     */
+    public function savedList($className, $count, $attributeOverrides = array())
+    {
+        $list = array();
+
+        for ($i = 0; $i < $count; $i++)
+        {
+            $list[] = $this->saved($className, $attributeOverrides);
+        }
+
+        return $list;
+    }
+
 }
