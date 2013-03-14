@@ -107,4 +107,41 @@ class TestWoodlingWoodling extends PHPUnit_Framework_TestCase
         Woodling::saved($name, $overrides);
     }
 
+    public function testStaticRetrieveList()
+    {
+        $name = 'stdClass';
+        $count = 3;
+        $returnValue = array(new $name());
+
+        $coreMock = $this->getMock('Woodling\Core', array('retrieveList'));
+        $coreMock->expects($this->once())
+            ->method('retrieveList')
+            ->with($this->equalTo($name), $this->equalTo($count), $this->equalTo(array()))
+            ->will($this->returnValue($returnValue));
+
+        Woodling::setCore($coreMock);
+
+        $list = Woodling::retrieveList($name, $count);
+        $this->assertEquals($returnValue, $list);
+    }
+
+    public function testStaticRetrieveListWithOverrides()
+    {
+        $name = 'stdClass';
+        $count = 3;
+        $overrides = array('name' => 'Mindaugas Bujanauskas');
+        $returnValue = array(new $name());
+
+        $coreMock = $this->getMock('Woodling\Core', array('retrieveList'));
+        $coreMock->expects($this->once())
+            ->method('retrieveList')
+            ->with($this->equalTo($name), $this->equalTo($count), $this->equalTo($overrides))
+            ->will($this->returnValue($returnValue));
+
+        Woodling::setCore($coreMock);
+
+        $list = Woodling::retrieveList($name, $count, $overrides);
+        $this->assertEquals($returnValue, $list);
+    }
+
 }

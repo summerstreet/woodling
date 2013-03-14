@@ -101,4 +101,24 @@ class Core
         return $instance;
     }
 
+    /**
+     * Returns an array containing specified amount of model instances
+     *
+     * @param string $className
+     * @param int $count
+     * @param array $attributeOverrides
+     * @return array
+     */
+    public function retrieveList($className, $count, $attributeOverrides = array())
+    {
+        $list = array();
+
+        for ($i = 0; $i < $count; $i++)
+        {
+            $list[] = $this->retrieve($className, $attributeOverrides);
+        }
+
+        return $list;
+    }
+
 }
