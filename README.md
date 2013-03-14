@@ -169,6 +169,15 @@ Woodling::seed('Molecule', function($molecule)
 $H2O = Woodling::retrieve('Molecule');
 ```
 
+### Lists
+
+Sometimes you might want to retrieve an array of several instances instead of a single. Woodling's got you covered by providing two build strategies for you: `retrieveList()` and `savedList()`. Here's how to use them (attribute overrides are optional):
+
+```
+$usersArray = Woodling::retrieveList('User', 50);
+$savedUsers = Woodling::savedList('User', 50, array('name' => 'Test User'));
+```
+
 ### Retrieving blueprints with advanced overrides
 
 You can override lazy attributes by passing them in as a regular callback function that returns something. To override sequences, you can put them under `:sequences` array:
