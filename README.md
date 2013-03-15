@@ -41,6 +41,8 @@ Woodling::seed('Admin', array('class' => 'User', 'do' => function($blueprint)
 
 By the way, since Woodling utilises _your_ code, you can take advantage of everything that your classes do under the hood. For example, if you were using Laravel's Eloquent, and it would have a `set_password()` method defined, this method would be called when setting your password.
 
+### Autoloading blueprints
+
 Woodling will automagically load your blueprints defined in following locations:
 
 * application/tests/blueprints/*.php
@@ -97,6 +99,15 @@ $user = Woodling::retrieve('User', array(
 	'hobbies' => 'Skateboarding, cooking',
 	'occupation' => 'Developer'
 ));
+```
+
+### Retrieving lists
+
+You can also retrieve an array of several instances instead of a single result. Woodling provides two build strategies for you: `retrieveList()` and `savedList()`. Here's how to use them (attribute overrides are optional):
+
+```
+$usersArray = Woodling::retrieveList('User', 50);
+$savedUsers = Woodling::savedList('User', 50, array('name' => 'Test User'));
 ```
 
 ### Lazy attributes
@@ -167,15 +178,6 @@ Woodling::seed('Molecule', function($molecule)
 });
 
 $H2O = Woodling::retrieve('Molecule');
-```
-
-### Lists
-
-Sometimes you might want to retrieve an array of several instances instead of a single. Woodling's got you covered by providing two build strategies for you: `retrieveList()` and `savedList()`. Here's how to use them (attribute overrides are optional):
-
-```
-$usersArray = Woodling::retrieveList('User', 50);
-$savedUsers = Woodling::savedList('User', 50, array('name' => 'Test User'));
 ```
 
 ### Retrieving blueprints with advanced overrides
