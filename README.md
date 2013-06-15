@@ -151,7 +151,7 @@ Woodling::seed('Weakness', function($weakness)
 Woodling::seed('Person', function($person)
 {
     $person->name = 'Eve';
-    $person->weakness = Woodling::retrieve('Weakness');
+    $person->weakness = function() { return Woodling::retrieve('Weakness'); };
 });
 
 $eve = Woodling::retrieve('Person');
