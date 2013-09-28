@@ -71,10 +71,12 @@ class Runner
             unset($attributes[':sequences']);
         }
 
-        $attributes = $attributes + $blueprint->getAttributes();
         $sequences = $sequences + $blueprint->getSequences();
-        $this->withAttributes($instance, $attributes);
         $this->withSequences($instance, $sequences);
+
+        $attributes = $attributes + $blueprint->getAttributes();
+        $this->withAttributes($instance, $attributes);
+
         return $instance;
     }
 

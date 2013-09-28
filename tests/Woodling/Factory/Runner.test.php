@@ -129,6 +129,21 @@ class TestWoodlingFactoryRunner extends PHPUnit_Framework_TestCase
         $this->assertEquals(1, $instance->index);
     }
 
+    public function testMakeWithSequenceOverrideWithAttribute()
+    {
+        $className = 'stdClass';
+        $sequences = array(
+            'email' => function($i) { return "username{$i}@hostname.com"; },
+        );
+        $attributeOverrides = array(
+            'email' => 'name@hostname.com'
+        );
+        $blueprint = new Blueprint();
+        $blueprint->setSequences($sequences);
+        $instance = $this->runner->make($className, $blueprint, $attributeOverrides);
+        $this->assertEquals('name@hostname.com', $instance->email);
+    }
+
     public function testMakeWithVariousAttributes()
     {
         $className = 'stdClass';
