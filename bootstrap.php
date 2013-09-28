@@ -1,3 +1,0 @@
-<?php
-
-Woodling\Woodling::init();

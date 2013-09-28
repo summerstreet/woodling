@@ -22,8 +22,7 @@
     {
         "psr-0": {
             "Woodling": "src/"
-        },
-        "files": ["bootstrap.php"]
+        }
     },
     "minimum-stability": "stable"
 }

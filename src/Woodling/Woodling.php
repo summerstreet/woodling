@@ -23,11 +23,21 @@ class Woodling
         return $core;
     }
 
+    public static function reset()
+    {
+        self::$core = NULL;
+    }
+
     /**
      * @return Core
      */
     public static function getCore()
     {
+        if (static::$core === NULL)
+        {
+            static::init();
+        }
+
         return static::$core;
     }
 
