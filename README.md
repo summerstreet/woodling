@@ -2,7 +2,7 @@
 
 Easy to use fixtures for your models. Requires no configuration on your side, leverages _your code_ to do all the work.
 
-### Installation
+### Installation and initialization
 
 You can install Woodling via [Composer](http://getcomposer.org/). Put this in your `composer.json` file and run `$ composer update --dev`:
 
@@ -19,13 +19,13 @@ You don't need to do anything else. Woodling will be automatically loaded for yo
 
 Blueprints are used to construct an instance of your specified model. Woodling guesses which model class you want to use from the name you give your blueprint.
 
-The following code will return an instance of _User_ class with `name` attribute set to "Mindaugas Bujanauskas" and `hobbies` attribute set to "Skateboarding".
+The following code will return an instance of _User_ class with `name` attribute set to "John Doe" and `hobbies` attribute set to "Unit Testing".
 
 ```
 Woodling::seed('User', function($blueprint)
 {
-	$blueprint->name = 'Mindaugas Bujanauskas';
-	$blueprint->hobbies = 'Skateboarding';
+	$blueprint->name = 'John Doe';
+	$blueprint->hobbies = 'Unit Testing';
 });
 ```
 
@@ -34,12 +34,12 @@ You can also specify a different class name by passing it in with an array of ar
 ```
 Woodling::seed('Admin', array('class' => 'User', 'do' => function($blueprint)
 {
-	$blueprint->name = 'Mindaugas Bujanauskas';
+	$blueprint->name = 'John Doe';
 	$blueprint->admin = 1;
 }));
 ```
 
-By the way, since Woodling utilises _your_ code, you can take advantage of everything that your classes do under the hood. For example, if you were using Laravel's Eloquent, and it would have a `set_password()` method defined, this method would be called when setting your password.
+By the way, since Woodling utilises _your_ code, you can take advantage of everything that your classes do under the hood. For example, if you were using Laravel's Eloquent, and your model would have a `setPassword()` mutator defined, this method would be called when setting your password.
 
 ### Autoloading blueprints
 
@@ -112,7 +112,7 @@ $savedUsers = Woodling::savedList('User', 50, array('name' => 'Test User'));
 
 ### Lazy attributes
 
-If you want to calculate your attribute values during instantiation time, you can do so with _lazy attributes_. Just assign a closure to your attribute. The value returned will be the value used when setting this attribute on your model.
+If you want to calculate your attribute values during instantiation time, you can do so with _lazy attributes_. Just assign a closure to your attribute. The value returned from the closure will be the value used when setting this attribute on your model.
 
 ```
 Woodling::seed('User', function($blueprint)
@@ -201,9 +201,9 @@ Here's an example that shows how to use sequences and lazy attributes to create 
 ```
 Woodling::seed('User', function($blueprint)
 {
-	$blueprint->name = 'Mindaugas';
-	$blueprint->surname = 'Bujanauskas';
-	$blueprint->birthday = '1989.03.03';
+	$blueprint->name = 'John';
+	$blueprint->surname = 'Doe';
+	$blueprint->birthday = '1969.07.13';
 	$blueprint->sequence('email', function($i) use($blueprint)
 	{
 		$email = "{$blueprint->name}{$i}@hostname.com";
