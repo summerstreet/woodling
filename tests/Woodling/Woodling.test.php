@@ -6,6 +6,11 @@ use Woodling\Woodling;
 class TestWoodlingWoodling extends PHPUnit_Framework_TestCase
 {
 
+    public function tearDown()
+    {
+        Woodling::reset();
+    }
+
     /**
      * Should set a new instance of Woodling\Core on Woodling\Woodling
      */
@@ -29,16 +34,33 @@ class TestWoodlingWoodling extends PHPUnit_Framework_TestCase
         $this->assertClassHasStaticAttribute('core', 'Woodling\Woodling');
     }
 
+    public function testStaticReset()
+    {
+        $core = new Core();
+        $woodlingMock = $this->getMockClass('Woodling\Woodling', array('init'));
+        $woodlingMock::staticExpects($this->any())
+            ->method('init');
+
+        $woodlingMock::setCore($core);
+        $this->assertSame($core, $woodlingMock::getCore());
+
+        $woodlingMock::reset();
+        $this->assertSame(NULL, $woodlingMock::getCore());
+    }
+
     /**
      * Should return whatever's in Woodling::$core
      */
     public function testStaticSetAndGetCore()
     {
-        $oldCore = Woodling::getCore();
         $newCore = new Core();
         Woodling::setCore($newCore);
         $this->assertSame($newCore, Woodling::getCore());
-        Woodling::setCore($oldCore);
+    }
+
+    public function testStaticGetCoreInitsOnFirstUse()
+    {
+        $this->assertInstanceOf('Woodling\Core', Woodling::getCore());
     }
 
     public function testStaticSeed()

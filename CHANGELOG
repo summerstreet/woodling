@@ -1,3 +1,8 @@
+New changes
+
+* Allows attribute overrides to override default sequences [patch by Tommy Sullivan]
+* Initialize only on first usage
+
 June 15, 2013 - v0.1.4
 
 * Fix a huge mistake in docs regarding retrieving one-to-one relationships
