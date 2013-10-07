@@ -79,7 +79,7 @@ class Blueprint
      * @param string $key
      * @param callable $closure
      */
-    public function setSequence($key, callable $closure)
+    public function setSequence($key, $closure)
     {
         $this->sequences[$key] = $closure;
     }
