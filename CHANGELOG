@@ -2,6 +2,7 @@ New changes
 
 * Allows attribute overrides to override default sequences [patch by Tommy Sullivan]
 * Initialize only on first usage
+* Fix PHP 5.3 typehinting issue
 
 June 15, 2013 - v0.1.4
 
