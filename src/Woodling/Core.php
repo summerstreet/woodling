@@ -43,7 +43,7 @@ class Core
      * Lets you define a blueprint for your class
      *
      * @param string $className
-     * @param callable|array $params
+     * @param \Closure|array $params
      * @throws \InvalidArgumentException
      */
     public function seed($className, $params)

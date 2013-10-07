@@ -51,7 +51,7 @@ class Woodling
 
     /**
      * @param string $className
-     * @param callable|array $params
+     * @param \Closure|array $params
      */
     public static function seed($className, $params)
     {

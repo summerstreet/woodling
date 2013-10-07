@@ -68,7 +68,7 @@ class Blueprint
 
     /**
      * @param string $key
-     * @param callable $closure
+     * @param \Closure $closure
      */
     public function sequence($key, $closure)
     {
@@ -77,16 +77,16 @@ class Blueprint
 
     /**
      * @param string $key
-     * @param callable $closure
+     * @param \Closure $closure
      */
-    public function setSequence($key, callable $closure)
+    public function setSequence($key, \Closure $closure)
     {
         $this->sequences[$key] = $closure;
     }
 
     /**
      * @param string $key
-     * @return callable
+     * @return \Closure
      */
     public function getSequence($key)
     {
