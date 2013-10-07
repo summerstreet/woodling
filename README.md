@@ -1,5 +1,4 @@
 # Woodling
-----------
 
 [![Latest Stable Version](https://poser.pugx.org/summerstreet/woodling/v/stable.png)](https://packagist.org/packages/summerstreet/woodling) [![Total Downloads](https://poser.pugx.org/summerstreet/woodling/downloads.png)](https://packagist.org/packages/summerstreet/woodling) [![Build Status](https://travis-ci.org/summerstreet/woodling.png)](https://travis-ci.org/summerstreet/woodling)
 
