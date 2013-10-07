@@ -1,4 +1,7 @@
 # Woodling
+----------
+
+[![Latest Stable Version](https://poser.pugx.org/summerstreet/woodling/v/stable.png)](https://packagist.org/packages/summerstreet/woodling) [![Total Downloads](https://poser.pugx.org/summerstreet/woodling/downloads.png)](https://packagist.org/packages/summerstreet/woodling) [![Build Status](https://travis-ci.org/summerstreet/woodling.png)](https://travis-ci.org/summerstreet/woodling)
 
 Easy to use fixtures for your models. Requires no configuration on your side, leverages _your code_ to do all the work.
 
