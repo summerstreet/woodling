@@ -8,7 +8,7 @@ Easy to use fixtures for your models. Requires no configuration on your side, le
 
 You can install Woodling via [Composer](http://getcomposer.org/). Put this in your `composer.json` file and run `$ composer update --dev`:
 
-```
+```json
 "require-dev":
 {
 	"summerstreet/woodling": "0.1.*"
@@ -23,7 +23,7 @@ Blueprints are used to construct an instance of your specified model. Woodling g
 
 The following code will return an instance of _User_ class with `name` attribute set to "John Doe" and `hobbies` attribute set to "Unit Testing".
 
-```
+```php
 Woodling::seed('User', function($blueprint)
 {
 	$blueprint->name = 'John Doe';
@@ -33,7 +33,7 @@ Woodling::seed('User', function($blueprint)
 
 You can also specify a different class name by passing it in with an array of arguments. This will create a blueprint called "Admin" and use class "User" when creating an object:
 
-```
+```php
 Woodling::seed('Admin', array('class' => 'User', 'do' => function($blueprint)
 {
 	$blueprint->name = 'John Doe';
@@ -56,7 +56,7 @@ Woodling will automagically load your blueprints defined in following locations:
 
 You can also add additional search paths. In your bootstrap file add the following lines:
 
-```
+```php
 use Woodling/Woodling;
 
 // Single path
@@ -74,7 +74,7 @@ Woodling::getCore()->finder->findBlueprints();
 
 When adding paths, keep in mind, that the last segment of the path will be used as both file name and dir name:
 
-```
+```php
 // Looks in these destinations:
 // - tests/blueprints/*.php
 // - tests/blueprints.php
@@ -85,7 +85,7 @@ Woodling::getCore()->finder->addPaths('tests/blueprints');
 
 To retrieve instances of your models, you can use the following methods:
 
-```
+```php
 $user = Woodling::retrieve('User');
 $user = Woodling::saved('User');
 ```
@@ -96,7 +96,7 @@ The `retrieve()` method will return an instance of your class. The `saved()` met
 
 Sometimes you need to retrieve your models with slightly different attributes than the ones you specified in your blueprint. You can do so by passing an array of `key => value` pairs where `key` is the name of the attribute you want to override.
 
-```
+```php
 $user = Woodling::retrieve('User', array(
 	'hobbies' => 'Skateboarding, cooking',
 	'occupation' => 'Developer'
@@ -107,7 +107,7 @@ $user = Woodling::retrieve('User', array(
 
 You can also retrieve an array of several instances instead of a single result. Woodling provides two build strategies for you: `retrieveList()` and `savedList()`. Here's how to use them (attribute overrides are optional):
 
-```
+```php
 $usersArray = Woodling::retrieveList('User', 50);
 $savedUsers = Woodling::savedList('User', 50, array('name' => 'Test User'));
 ```
@@ -116,7 +116,7 @@ $savedUsers = Woodling::savedList('User', 50, array('name' => 'Test User'));
 
 If you want to calculate your attribute values during instantiation time, you can do so with _lazy attributes_. Just assign a closure to your attribute. The value returned from the closure will be the value used when setting this attribute on your model.
 
-```
+```php
 Woodling::seed('User', function($blueprint)
 {
 	$blueprint->created = function() { return time(); };
@@ -129,7 +129,7 @@ Very often you have validation rules on your models or in the database that requ
 
 Each time you retrieve an object, it's counter will be incremented. The following code will set an `email` attribute on your model. The first time you retrieve this object, it will receive a counter value of `1`, the second time your retrieve it, counter will be `2` and so on.
 
-```
+```php
 Woodling::seed('User', function($blueprint)
 {
 	$blueprint->sequence('email', function($i)
@@ -143,7 +143,7 @@ Woodling::seed('User', function($blueprint)
 
 It is possible to create model associations by returning them from lazy attributes. This is how you'd retrieve an instance with one-to-one relationship from Woodling:
 
-```
+```php
 Woodling::seed('Weakness', function($weakness)
 {
     $weakness->type = 'Fruit';
@@ -162,7 +162,7 @@ $eve = Woodling::retrieve('Person');
 And this is how you'd do the same for one-to-many:
 
 
-```
+```php
 Woodling::seed('Atom', function($atom)
 {
     $atom->element = 'H';
@@ -186,7 +186,7 @@ $H2O = Woodling::retrieve('Molecule');
 
 You can override lazy attributes by passing them in as a regular callback function that returns something. To override sequences, you can put them under `:sequences` array:
 
-```
+```php
 $user = Woodling::retrieve('User', array(
 	'occupation' => 'Developer',
 	'created' => function() { return time(); },
@@ -200,7 +200,7 @@ $user = Woodling::retrieve('User', array(
 
 Here's an example that shows how to use sequences and lazy attributes to create more realistic model instances.
 
-```
+```php
 Woodling::seed('User', function($blueprint)
 {
 	$blueprint->name = 'John';
