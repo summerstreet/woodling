@@ -9,7 +9,7 @@ class Core
     protected $repository;
 
     /**
-     * @var Finder
+     * @var Finder Loads user defined blueprints
      */
     public $finder;
 

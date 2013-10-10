@@ -50,6 +50,8 @@ class Woodling
     }
 
     /**
+     * Creates a new blueprint and stores it in repository.
+     * 
      * @param string $className
      * @param \Closure|array $params
      */
@@ -59,6 +61,8 @@ class Woodling
     }
 
     /**
+     * Returns an instance of your class with attributes defined in blueprint.
+     * 
      * @param string $className
      * @param array $attributeOverrides
      * @return object
@@ -69,6 +73,8 @@ class Woodling
     }
 
     /**
+     * Returns a saved instance of your class with attributes defined in blueprint.
+     * 
      * @param string $className
      * @param array $attributeOverrides
      * @return object
@@ -79,6 +85,8 @@ class Woodling
     }
 
     /**
+     * Returns an array of your class instances.
+     * 
      * @param string $className
      * @param int $count
      * @param array $attributeOverrides
@@ -90,6 +98,8 @@ class Woodling
     }
 
     /**
+     * Returns an array of your class' saved instances
+     * 
      * @param string $className
      * @param int $count
      * @param array $attributeOverrides
