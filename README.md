@@ -92,6 +92,14 @@ $user = Woodling::saved('User');
 
 The `retrieve()` method will return an instance of your class. The `saved()` method will create an instance of your class and call the `save()` method on it before returning it.
 
+If your class uses a different method name for persisting, you can change it like this:
+
+```php
+Woodling::core()->persistMethod = 'mySaveMethod';
+```
+
+This will use `mySaveMethod` when you are retrieving saved instances of your class.
+
 ### Retrieving blueprints with attribute overrides
 
 Sometimes you need to retrieve your models with slightly different attributes than the ones you specified in your blueprint. You can do so by passing an array of `key => value` pairs where `key` is the name of the attribute you want to override.
