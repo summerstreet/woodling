@@ -98,7 +98,7 @@ If your class uses a different method name for persisting, you can change it lik
 Woodling::core()->persistMethod = 'mySaveMethod';
 ```
 
-This will use `mySaveMethod` when you are retrieving saved instances of your class.
+This will call `mySaveMethod()` when you are retrieving saved instances of your class.
 
 ### Retrieving blueprints with attribute overrides
 
