@@ -60,6 +60,19 @@ class TestWoodlingWoodling extends PHPUnit_Framework_TestCase
         $this->assertSame($core, Woodling::core($core));
     }
 
+    public function testDeprecatedSetGetCore()
+    {
+        $core = new Core();
+        $woodlingMock = $this->getMockClass('Woodling\Woodling', array('core'));
+        $woodlingMock::staticExpects($this->at(0))
+            ->method('core');
+        $woodlingMock::staticExpects($this->at(1))
+            ->method('core')
+            ->with($this->isInstanceOf('Woodling\Core'));
+        $woodlingMock::getCore();
+        $woodlingMock::setCore($core);
+    }
+
     public function testStaticSeed()
     {
         $name = 'User';

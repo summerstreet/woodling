@@ -24,22 +24,51 @@ class Woodling
 
     public static function reset()
     {
-        self::$core = NULL;
+        static::$core = NULL;
     }
 
+    /**
+     * Returns Woodling::$core. If no core set, will run Woodling::init(). If $core is
+     * passed as an argument, will set that core and then return it.
+     * 
+     * @param Core $core
+     * @return Core
+     */
     public static function core(Core $core = NULL)
     {
         if ($core)
         {
-            self::$core = $core;
+            static::$core = $core;
         }
 
-        else if (self::$core === NULL)
+        else if (static::$core === NULL)
         {
-            self::$core = self::init();
+            static::$core = static::init();
         }
 
-        return self::$core;
+        return static::$core;
+    }
+
+    /**
+     * Returns (and initializes if none set) an instance of Woodling\Core
+     *
+     * @deprecated Since v0.2
+     * @return Core
+     */
+    public static function getCore()
+    {
+        return static::core();
+    }
+
+    /**
+     * Sets a Woodling\Core instance
+     *
+     * @param \Woodling\Core $core
+     * @deprecated Since v0.2
+     */
+    public static function setCore(Core $core)
+    {
+        static::core($core);
     }
 
     /**
