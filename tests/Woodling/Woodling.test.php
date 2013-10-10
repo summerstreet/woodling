@@ -12,11 +12,10 @@ class TestWoodlingWoodling extends PHPUnit_Framework_TestCase
         Woodling::reset();
     }
 
-    /**
-     * Should set a new instance of Woodling\Core on Woodling\Woodling
-     */
     public function testStaticInit()
     {
+        // We will create a new file with a class name only we know. This file should be
+        // loaded by Woodling::init().
         $file = 'tests/blueprints.php';
         $class = 'WoodlingTestStaticInitHelper_'.md5(microtime());
         $content = '<?php class '.$class.'{}';
@@ -44,7 +43,7 @@ class TestWoodlingWoodling extends PHPUnit_Framework_TestCase
         $woodlingMock::core($core);
         $this->assertSame($core, $woodlingMock::core());
 
-        // Woodling::$core should be set to NULL after we call reset() method and when we
+        // After we call reset() method Woodling::$core should be set to NULL and when we
         // try to call core() it should set a new core for us.
         $woodlingMock::reset();
         $this->assertNotSame($core, $woodlingMock::core());
