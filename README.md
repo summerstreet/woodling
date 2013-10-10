@@ -60,16 +60,16 @@ You can also add additional search paths. In your bootstrap file add the followi
 use Woodling/Woodling;
 
 // Single path
-Woodling::getCore()->finder->addPaths('src/Acme/DemoBundle/Tests/blueprints');
+Woodling::core()->finder->addPaths('src/Acme/DemoBundle/Tests/blueprints');
 
 // Several paths
-Woodling::getCore()->finder->addPaths(array(
+Woodling::core()->finder->addPaths(array(
 	'/absolute/path/to/blueprints',
 	'relative/path/to/blueprints'
 ));
 
 // Search in new paths
-Woodling::getCore()->finder->findBlueprints();
+Woodling::core()->finder->findBlueprints();
 ```
 
 When adding paths, keep in mind, that the last segment of the path will be used as both file name and dir name:
@@ -78,7 +78,7 @@ When adding paths, keep in mind, that the last segment of the path will be used 
 // Looks in these destinations:
 // - tests/blueprints/*.php
 // - tests/blueprints.php
-Woodling::getCore()->finder->addPaths('tests/blueprints');
+Woodling::core()->finder->addPaths('tests/blueprints');
 ```
 
 ### Retrieving blueprints

@@ -18,7 +18,6 @@ class Woodling
     public static function init()
     {
         $core = new Core();
-        static::setCore($core);
         $core->finder->findBlueprints();
         return $core;
     }
@@ -28,25 +27,19 @@ class Woodling
         self::$core = NULL;
     }
 
-    /**
-     * @return Core
-     */
-    public static function getCore()
+    public static function core(Core $core = NULL)
     {
-        if (static::$core === NULL)
+        if ($core)
         {
-            static::init();
+            self::$core = $core;
         }
 
-        return static::$core;
-    }
+        else if (self::$core === NULL)
+        {
+            self::$core = self::init();
+        }
 
-    /**
-     * @param Core $core
-     */
-    public static function setCore(Core $core)
-    {
-        static::$core = $core;
+        return self::$core;
     }
 
     /**
@@ -57,7 +50,7 @@ class Woodling
      */
     public static function seed($className, $params)
     {
-        static::getCore()->seed($className, $params);
+        static::core()->seed($className, $params);
     }
 
     /**
@@ -69,7 +62,7 @@ class Woodling
      */
     public static function retrieve($className, $attributeOverrides = array())
     {
-        return static::getCore()->retrieve($className, $attributeOverrides);
+        return static::core()->retrieve($className, $attributeOverrides);
     }
 
     /**
@@ -81,7 +74,7 @@ class Woodling
      */
     public static function saved($className, $attributeOverrides = array())
     {
-        return static::getCore()->saved($className, $attributeOverrides);
+        return static::core()->saved($className, $attributeOverrides);
     }
 
     /**
@@ -94,7 +87,7 @@ class Woodling
      */
     public static function retrieveList($className, $count, $attributeOverrides = array())
     {
-        return static::getCore()->retrieveList($className, $count, $attributeOverrides);
+        return static::core()->retrieveList($className, $count, $attributeOverrides);
     }
 
     /**
@@ -107,7 +100,7 @@ class Woodling
      */
     public static function savedList($className, $count, $attributeOverrides = array())
     {
-        return static::getCore()->savedList($className, $count, $attributeOverrides);
+        return static::core()->savedList($className, $count, $attributeOverrides);
     }
 
 }

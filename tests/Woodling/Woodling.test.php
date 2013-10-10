@@ -8,6 +8,7 @@ class TestWoodlingWoodling extends PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
+        // Each test starts with no core
         Woodling::reset();
     }
 
@@ -21,9 +22,7 @@ class TestWoodlingWoodling extends PHPUnit_Framework_TestCase
         $content = '<?php class '.$class.'{}';
         @file_put_contents($file, $content);
 
-        $woodling = Woodling::init();
-        $this->assertInstanceOf('Woodling\Core', Woodling::getCore());
-        $this->assertSame($woodling, Woodling::getCore());
+        $this->assertInstanceOf('Woodling\Core', Woodling::init());
         $this->assertTrue(class_exists($class));
 
         @unlink($file);
@@ -41,26 +40,25 @@ class TestWoodlingWoodling extends PHPUnit_Framework_TestCase
         $woodlingMock::staticExpects($this->any())
             ->method('init');
 
-        $woodlingMock::setCore($core);
-        $this->assertSame($core, $woodlingMock::getCore());
+        // Control test to make sure we are getting back what we expect from core()
+        $woodlingMock::core($core);
+        $this->assertSame($core, $woodlingMock::core());
 
+        // Woodling::$core should be set to NULL after we call reset() method and when we
+        // try to call core() it should set a new core for us.
         $woodlingMock::reset();
-        $this->assertSame(NULL, $woodlingMock::getCore());
+        $this->assertNotSame($core, $woodlingMock::core());
     }
 
-    /**
-     * Should return whatever's in Woodling::$core
-     */
-    public function testStaticSetAndGetCore()
+    public function testStaticCore()
     {
-        $newCore = new Core();
-        Woodling::setCore($newCore);
-        $this->assertSame($newCore, Woodling::getCore());
-    }
+        // Test that core() creates a core if none exists
+        $this->assertInstanceOf('Woodling\Core', Woodling::core());
 
-    public function testStaticGetCoreInitsOnFirstUse()
-    {
-        $this->assertInstanceOf('Woodling\Core', Woodling::getCore());
+        // Test that core is set when passing it to `core()`
+        Woodling::reset();
+        $core = new Core();
+        $this->assertSame($core, Woodling::core($core));
     }
 
     public function testStaticSeed()
@@ -71,7 +69,7 @@ class TestWoodlingWoodling extends PHPUnit_Framework_TestCase
         $coreMock->expects($this->once())
             ->method('seed')
             ->with($this->equalTo($name), $this->isInstanceOf('Closure'));
-        Woodling::setCore($coreMock);
+        Woodling::core($coreMock);
         Woodling::seed($name, $closure);
     }
 
@@ -84,7 +82,7 @@ class TestWoodlingWoodling extends PHPUnit_Framework_TestCase
             ->method('retrieve')
             ->with($this->equalTo($name))
             ->will($this->returnValue($returnValue));
-        Woodling::setCore($coreMock);
+        Woodling::core($coreMock);
         $this->assertEquals($returnValue, Woodling::retrieve($name));
     }
 
@@ -98,7 +96,7 @@ class TestWoodlingWoodling extends PHPUnit_Framework_TestCase
             ->method('retrieve')
             ->with($this->equalTo($name), $this->arrayHasKey('name'))
             ->will($this->returnValue($returnValue));
-        Woodling::setCore($coreMock);
+        Woodling::core($coreMock);
         Woodling::retrieve($name, $overrides);
     }
 
@@ -111,7 +109,7 @@ class TestWoodlingWoodling extends PHPUnit_Framework_TestCase
             ->method('saved')
             ->with($this->equalTo($name))
             ->will($this->returnValue($returnValue));
-        Woodling::setCore($coreMock);
+        Woodling::core($coreMock);
         $this->assertEquals($returnValue, Woodling::saved($name));
     }
 
@@ -125,7 +123,7 @@ class TestWoodlingWoodling extends PHPUnit_Framework_TestCase
             ->method('saved')
             ->with($this->equalTo($name), $this->arrayHasKey('name'))
             ->will($this->returnValue($returnValue));
-        Woodling::setCore($coreMock);
+        Woodling::core($coreMock);
         Woodling::saved($name, $overrides);
     }
 
@@ -141,7 +139,7 @@ class TestWoodlingWoodling extends PHPUnit_Framework_TestCase
             ->with($this->equalTo($name), $this->equalTo($count), $this->equalTo(array()))
             ->will($this->returnValue($returnValue));
 
-        Woodling::setCore($coreMock);
+        Woodling::core($coreMock);
 
         $list = Woodling::retrieveList($name, $count);
         $this->assertEquals($returnValue, $list);
@@ -160,7 +158,7 @@ class TestWoodlingWoodling extends PHPUnit_Framework_TestCase
             ->with($this->equalTo($name), $this->equalTo($count), $this->equalTo($overrides))
             ->will($this->returnValue($returnValue));
 
-        Woodling::setCore($coreMock);
+        Woodling::core($coreMock);
 
         $list = Woodling::retrieveList($name, $count, $overrides);
         $this->assertEquals($returnValue, $list);
@@ -178,7 +176,7 @@ class TestWoodlingWoodling extends PHPUnit_Framework_TestCase
             ->with($this->equalTo($name), $this->equalTo($count), $this->equalTo(array()))
             ->will($this->returnValue($returnValue));
 
-        Woodling::setCore($coreMock);
+        Woodling::core($coreMock);
 
         $list = Woodling::savedList($name, $count);
         $this->assertEquals($returnValue, $list);
@@ -197,7 +195,7 @@ class TestWoodlingWoodling extends PHPUnit_Framework_TestCase
             ->with($this->equalTo($name), $this->equalTo($count), $this->equalTo($overrides))
             ->will($this->returnValue($returnValue));
 
-        Woodling::setCore($coreMock);
+        Woodling::core($coreMock);
 
         $list = Woodling::savedList($name, $count, $overrides);
         $this->assertEquals($returnValue, $list);
