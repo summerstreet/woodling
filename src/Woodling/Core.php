@@ -13,6 +13,11 @@ class Core
      */
     public $finder;
 
+    /**
+     * @var string This method will be called when you try to retrieve saved instance
+     */
+    public $persistMethod = 'save';
+
     public function __construct()
     {
         $this->setRepository(new Repository());
@@ -97,7 +102,7 @@ class Core
     public function saved($className, $attributeOverrides = array())
     {
         $instance = $this->retrieve($className, $attributeOverrides);
-        $instance->save();
+        $instance->{$this->persistMethod}();
         return $instance;
     }
 

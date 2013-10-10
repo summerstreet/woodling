@@ -74,7 +74,7 @@ class TestWoodlingCore extends PHPUnit_Framework_TestCase
     public function testSeedAdvanced()
     {
         $name = 'Author';
-        $author = 'Mindaugas Bujanauskas';
+        $author = 'John Doe';
         $className = 'User';
         $fixture = function($blueprint) use($author) { $blueprint->name = $author; };
         $this->core->seed($name, array('class' => $className, 'do' => $fixture));
@@ -102,7 +102,7 @@ class TestWoodlingCore extends PHPUnit_Framework_TestCase
 
     public function testRetrieveWithOverrides()
     {
-        $overrides = array('name' => 'Mindaugas', 'surname' => 'Bujanauskas');
+        $overrides = array('name' => 'John', 'surname' => 'Doe');
         $modelName = 'stdClass';
         $factoryMock = $this->getMock('Woodling\Factory', array('make'), array('Mock', new Blueprint()));
         $factoryMock->expects($this->once())
@@ -114,21 +114,23 @@ class TestWoodlingCore extends PHPUnit_Framework_TestCase
 
     public function testSaved()
     {
+        $persistMethodName = 'mySaveMethod';
         $modelName = 'stdClass';
-        $modelMock = $this->getMock($modelName, array('save'));
+        $modelMock = $this->getMock($modelName, array($persistMethodName));
         $modelMock->expects($this->once())
-            ->method('save');
+            ->method($persistMethodName);
         $coreMock = $this->getMock('Woodling\Core', array('retrieve'));
         $coreMock->expects($this->once())
             ->method('retrieve')
             ->with($this->equalTo($modelName))
             ->will($this->returnValue($modelMock));
+        $coreMock->persistMethod = $persistMethodName;
         $coreMock->saved($modelName);
     }
 
     public function testSavedWithOverrides()
     {
-        $overrides = array('name' => 'Mindaugas Bujanauskas');
+        $overrides = array('name' => 'John Doe');
         $modelName = 'stdClass';
         $modelMock = $this->getMock($modelName, array('save'));
         $modelMock->expects($this->once())
@@ -163,7 +165,7 @@ class TestWoodlingCore extends PHPUnit_Framework_TestCase
     {
         $name = 'stdClass';
         $instance = new $name();
-        $overrides = array('name' => 'Mindaugas Bujanauskas');
+        $overrides = array('name' => 'John Doe');
         $count = 3;
 
         $coreMock = $this->getMock('Woodling\Core', array('retrieve'));
@@ -200,7 +202,7 @@ class TestWoodlingCore extends PHPUnit_Framework_TestCase
     {
         $name = 'stdClass';
         $count = 3;
-        $overrides = array('name' => 'Mindaugas Bujanauskas');
+        $overrides = array('name' => 'John Doe');
         $returnValue = new $name();
 
         $coreMock = $this->getMock('Woodling\Core', array('saved'));
