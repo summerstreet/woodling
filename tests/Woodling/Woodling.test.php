@@ -73,6 +73,22 @@ class TestWoodlingWoodling extends PHPUnit_Framework_TestCase
         $woodlingMock::setCore($core);
     }
 
+    public function testStaticFactory()
+    {
+        $myFactoryName = 'myFactory';
+        $myFactory = 'Factory';
+        $coreMock = $this->getMock('Woodling\Core', array('getFactory'));
+        $coreMock->expects($this->once())
+            ->method('getFactory')
+            ->with($this->equalTo($myFactoryName))
+            ->will($this->returnValue($myFactory));
+
+        Woodling::core($coreMock);
+
+        $returnedFactory = Woodling::factory($myFactoryName);
+        $this->assertEquals($myFactory, $returnedFactory);
+    }
+
     public function testStaticSeed()
     {
         $name = 'User';

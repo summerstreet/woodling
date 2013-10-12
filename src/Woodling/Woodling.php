@@ -72,6 +72,17 @@ class Woodling
     }
 
     /**
+     * Returns a factory for your seed
+     *
+     * @param $factoryName Factory for Seed definition
+     * @return \Woodling\Factory
+     */
+    public static function factory($factoryName)
+    {
+        return static::core()->getFactory($factoryName);
+    }
+
+    /**
      * Creates a new blueprint and stores it in repository.
      * 
      * @param string $className

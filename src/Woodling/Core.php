@@ -6,7 +6,7 @@ class Core
     /**
      * @var Repository Contains user created blueprints
      */
-    protected $repository;
+    public $repository;
 
     /**
      * @var Finder Loads user defined blueprints
@@ -20,28 +20,19 @@ class Core
 
     public function __construct()
     {
-        $this->setRepository(new Repository());
+        $this->repository = new Repository();
         $this->finder = new Finder();
     }
 
     /**
-     * Repository setter
+     * Returns a factory with specified name
      *
-     * @param Repository $repository
+     * @param $factoryName
+     * @return Factory
      */
-    public function setRepository(Repository $repository)
+    public function getFactory($factoryName)
     {
-        $this->repository = $repository;
-    }
-
-    /**
-     * Repository getter
-     *
-     * @return Repository
-     */
-    public function getRepository()
-    {
-        return $this->repository;
+        return $this->repository->get($factoryName);
     }
 
     /**
@@ -76,7 +67,7 @@ class Core
         $consequence($blueprint);
 
         $factory = new Factory($class, $blueprint);
-        $this->getRepository()->add($className, $factory);
+        $this->repository->add($className, $factory);
     }
 
     /**
@@ -88,7 +79,7 @@ class Core
      */
     public function retrieve($className, $attributeOverrides = array())
     {
-        $factory = $this->getRepository()->get($className);
+        $factory = $this->getFactory($className);
         return $factory->make($attributeOverrides);
     }
 
