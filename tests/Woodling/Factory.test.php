@@ -68,4 +68,17 @@ class TestWoodlingFactory extends PHPUnit_Framework_TestCase
         $this->assertSame($returnValue, $instance);
     }
 
+    public function testRetrieve()
+    {
+        $makeArgs = 'Args';
+        $makeReturns = 'Instance';
+        $factoryMock = $this->getMock('Woodling\Factory', array('make'), array('stdClass', new Blueprint));
+        $factoryMock->expects($this->once())
+            ->method('make')
+            ->with($makeArgs)
+            ->will($this->returnValue($makeReturns));
+
+        $this->assertEquals($makeReturns, $factoryMock->retrieve($makeArgs));
+    }
+
 }

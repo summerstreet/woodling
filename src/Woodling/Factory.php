@@ -89,4 +89,13 @@ class Factory
         return $instance;
     }
 
+    /**
+     * @param $attributeOverrides
+     * @return object
+     */
+    public function retrieve($attributeOverrides)
+    {
+        return $this->make($attributeOverrides);
+    }
+
 }
