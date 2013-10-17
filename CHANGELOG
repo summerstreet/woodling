@@ -1,4 +1,6 @@
-New changes
+October 17, 2013 - v0.1.5
+
+This release fixes a bug where sequences could not be overridden by supplied attributes. From now on Woodling is only initialized on first use (for example, when you do Woodling::retrieve()) and you can set a custom persist method name.
 
 * Allows attribute overrides to override default sequences [patch by Tommy Sullivan]
 * Initialize only on first usage
