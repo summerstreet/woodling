@@ -17,9 +17,8 @@ class Woodling
      */
     public static function init()
     {
-        $core = new Core();
-        $core->finder->findBlueprints();
-        return $core;
+        static::$core = new Core();
+        static::$core->finder->findBlueprints();
     }
 
     public static function reset()
@@ -43,7 +42,7 @@ class Woodling
 
         else if (static::$core === NULL)
         {
-            static::$core = static::init();
+            static::init();
         }
 
         return static::$core;

@@ -21,7 +21,7 @@ class TestWoodlingWoodling extends PHPUnit_Framework_TestCase
         $content = '<?php class '.$class.'{}';
         @file_put_contents($file, $content);
 
-        $this->assertInstanceOf('Woodling\Core', Woodling::init());
+        $this->assertInstanceOf('Woodling\Core', Woodling::core());
         $this->assertTrue(class_exists($class));
 
         @unlink($file);
