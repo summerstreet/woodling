@@ -1,7 +1,6 @@
 <?php
 
 use Woodling\Core;
-use Woodling\Repository;
 use Woodling\Blueprint;
 
 class TestWoodlingCore extends PHPUnit_Framework_TestCase
@@ -20,15 +19,24 @@ class TestWoodlingCore extends PHPUnit_Framework_TestCase
     public function testInstantiation()
     {
         $this->assertInstanceOf('Woodling\Core', $this->core);
-        $this->assertInstanceOf('Woodling\Repository', $this->core->getRepository());
+        $this->assertInstanceOf('Woodling\Repository', $this->core->repository);
         $this->assertInstanceOf('Woodling\Finder', $this->core->finder);
     }
 
-    public function testSetAndGetRepository()
+    public function testGetFactory()
     {
-        $newRepository = new Repository();
-        $this->core->setRepository($newRepository);
-        $this->assertSame($newRepository, $this->core->getRepository());
+        $factoryName = 'myFactory';
+        $expectedFactory = 'Factory';
+        $repositoryMock = $this->getMock('Woodling\Repository', array('get'));
+        $repositoryMock->expects($this->once())
+            ->method('get')
+            ->with($this->equalTo($factoryName))
+            ->will($this->returnValue($expectedFactory));
+
+        $this->core->repository = $repositoryMock;
+
+        $factory = $this->core->getFactory($factoryName);
+        $this->assertEquals($expectedFactory, $factory);
     }
 
     /**
@@ -54,7 +62,7 @@ class TestWoodlingCore extends PHPUnit_Framework_TestCase
 
         $this->core->seed($name, $callback); // Call!
 
-        $factory = $this->core->getRepository()->get($name);
+        $factory = $this->core->repository->get($name);
         $factoryBlueprint = $factory->getBlueprint();
 
         $this->assertInstanceOf('Woodling\Factory', $factory);
@@ -78,7 +86,7 @@ class TestWoodlingCore extends PHPUnit_Framework_TestCase
         $className = 'User';
         $fixture = function($blueprint) use($author) { $blueprint->name = $author; };
         $this->core->seed($name, array('class' => $className, 'do' => $fixture));
-        $factory = $this->core->getRepository()->get('Author');
+        $factory = $this->core->repository->get('Author');
         $this->assertEquals($author, $factory->getBlueprint()->getAttribute('name'));
         $this->assertEquals($className, $factory->getClassName());
     }
@@ -95,7 +103,7 @@ class TestWoodlingCore extends PHPUnit_Framework_TestCase
             ->method('get')
             ->with($this->equalTo($modelName))
             ->will($this->returnValue($factoryMock));
-        $this->core->setRepository($repositoryMock);
+        $this->core->repository = $repositoryMock;
         $instance = $this->core->retrieve($modelName);
         $this->assertInstanceOf($modelName, $instance);
     }
@@ -108,7 +116,7 @@ class TestWoodlingCore extends PHPUnit_Framework_TestCase
         $factoryMock->expects($this->once())
             ->method('make')
             ->with($this->logicalAnd($this->arrayHasKey('name'), $this->arrayHasKey('surname')));
-        $this->core->getRepository()->add($modelName, $factoryMock);
+        $this->core->repository->add($modelName, $factoryMock);
         $this->core->retrieve($modelName, $overrides);
     }
 

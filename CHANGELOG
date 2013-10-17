@@ -7,6 +7,7 @@ This release fixes a bug where sequences could not be overridden by supplied att
 * Fix PHP 5.3 typehinting issue [thanks to Stephen Sugden for reporting]
 * Introduced Woodling::core() to replace Woodling::getCore() and Woodling::setCore()
 * Possibility to choose a different persist method name
+* Added Woodling::factory() to the facade
 
 June 15, 2013 - v0.1.4
 
