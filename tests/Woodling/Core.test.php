@@ -126,7 +126,8 @@ class TestWoodlingCore extends PHPUnit_Framework_TestCase
         $modelName = 'stdClass';
         $modelMock = $this->getMock($modelName, array($persistMethodName));
         $modelMock->expects($this->once())
-            ->method($persistMethodName);
+            ->method($persistMethodName)
+            ->will($this->returnValue($modelMock));
         $coreMock = $this->getMock('Woodling\Core', array('retrieve'));
         $coreMock->expects($this->once())
             ->method('retrieve')
@@ -136,13 +137,35 @@ class TestWoodlingCore extends PHPUnit_Framework_TestCase
         $coreMock->saved($modelName);
     }
 
+    /**
+     * @expectedException              Exception
+     * @expectedExceptionMessageRegExp Failed to save model 
+     */
+    public function testFailedSave()
+    {
+        $persistMethodName = 'save';
+        $modelName = 'stdClass';
+        $modelMock = $this->getMock($modelName, array($persistMethodName));
+        $modelMock->expects($this->once())
+            ->method($persistMethodName)
+            ->will($this->returnValue(false));
+        $coreMock = $this->getMock('Woodling\Core', array('retrieve'));
+        $coreMock->expects($this->once())
+            ->method('retrieve')
+            ->with($this->equalTo($modelName))
+            ->will($this->returnValue($modelMock));
+        $coreMock->persistMethod = $persistMethodName;
+        $coreMock->saved($modelName); 
+    }
+
     public function testSavedWithOverrides()
     {
         $overrides = array('name' => 'John Doe');
         $modelName = 'stdClass';
         $modelMock = $this->getMock($modelName, array('save'));
         $modelMock->expects($this->once())
-            ->method('save');
+            ->method('save')
+            ->will($this->returnValue($modelMock));
         $coreMock = $this->getMock('Woodling\Core', array('retrieve'));
         $coreMock->expects($this->once())
             ->method('retrieve')

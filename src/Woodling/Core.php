@@ -93,8 +93,13 @@ class Core
     public function saved($className, $attributeOverrides = array())
     {
         $instance = $this->retrieve($className, $attributeOverrides);
-        $instance->{$this->persistMethod}();
-        return $instance;
+        $success = $instance->{$this->persistMethod}();
+        if ($success)
+        {
+            return $instance;
+        } else {
+            throw new \Exception("Failed to save model");
+        }
     }
 
     /**
@@ -136,5 +141,4 @@ class Core
 
         return $list;
     }
-
 }
